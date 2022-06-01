@@ -1,6 +1,7 @@
 const router = require("express").Router();
 const db = require("../util/db");
 const { v4: uuidv4 } = require("uuid");
+const e = require("express");
 
 /* GET ALL TASKS */
 router.route("/").get((req, res) => {
@@ -35,12 +36,33 @@ router.route("/add").post((req, res) => {
 /* GET A TASK */
 router.route("/:id").get((req, res) => {
   // write this method yourself
+  let sql = "SELECT :id FROM tasks"
+
+  let query = db.query(sql, (err, results) => {
+    if (err) {
+      console.log(err);
+      throw err;
+    }
+    res.json({ result: results });
+  });
+
 });
 
 /* DELETE A TASK */
 router.route("/:id").delete((req, res) => {
-  // write this method yourself
+// write this method yourself
+  let sql = "DELETE * FROM tasks"
+
+  let query = db.query(sql, (err, results) => {
+    if (err) {
+      console.log(err);
+      throw err;
+    }
+    res.json({ result: results });
+  });
+
 });
+
 
 /* UPDATE A TASK */
 router.route("/update/:id").post((req, res) => {
